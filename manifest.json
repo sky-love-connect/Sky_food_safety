@@ -1,0 +1,11 @@
+
+{
+  "name": "SKY FOOD SAFETY",
+  "short_name": "Sky Food",
+  "description": "AI Food Safety Assistant",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#eef5f0",
+  "theme_color": "#126b48",
+  "orientation": "portrait"
+}

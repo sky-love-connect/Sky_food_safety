@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#126b48">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sky Food Safety</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef5f0;
+  color: #18352a;
+}
+header {
+  background: #126b48;
+  color: white;
+  padding: 25px 18px;
+  text-align: center;
+}
+header h1 {
+  margin: 5px;
+}
+main {
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+}
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 3px 12px #00000012;
+}
+.camera {
+  width: 100%;
+  padding: 18px;
+  border: 2px dashed #168454;
+  border-radius: 14px;
+  text-align: center;
+}
+button, .upload {
+  display: block;
+  width: 100%;
+  padding: 15<head>px;
+  background: #168454;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  margin-top: 12px;
+  text-align: center;
+}
+#preview {
+  width: 100%;
+  margin-top: 15px;
+  border-radius: 12px;
+  display: none;
+}
+#result {
+  margin-top: 15px;
+  line-height: 1.6;
+}
+small {
+  color: #60756b;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🌿 SKY FOOD SAFETY</h1>
+  <p>Smart Food Safety Assistant</p>
+</header>
+
+<main>
+
+<div class="card">
+  <h2>Welcome!</h2>
+  <p>Check your food before eating.</p>
+  <p>Take a picture of your food using your phone camera.</p>
+</div>
+
+<div class="card">
+  <h3>📸 Scan Your Food</h3>
+
+  <div class="camera">
+    <p>Take a photo of your food</p>
+
+    <label class="upload" for="camera">
+      OPEN CAMERA
+    </label>
+
+    <input
+      type="file"
+      id="camera"
+      accept="image/*"
+      capture="environment"
+      hidden
+    >
+
+    <img id="preview" alt="Food preview">
+
+  </div>
+
+  <button onclick="analyzeFood()">
+    CHECK MY FOOD
+  </button>
+
+  <div id="result"></div>
+</div>
+
+<div class="card">
+  <h3>⚠️ Important Safety Notice</h3>
+  <small>
+    A photograph cannot confirm whether food
+    contains poison, harmful chemicals or bacteria.
+    Do not eat food suspected to be contaminated.
+    Laboratory testing may be necessary.
+  </small>
+</div>
+
+</main>
+
+<script>
+const camera = document.getElementById("camera");
+const preview = document.getElementById("preview");
+const result = document.getElementById("result");
+
+camera.addEventListener("change", function() {
+  const file = this.files[0];
+
+  if (file) {
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+
+    result.innerHTML =
+      "✅ Photo captured successfully!";
+  }
+});
+
+
+function analyzeFood() {
+  if (!camera.files.length) {
+    result.innerHTML = "📸 Please take a photo first.";
+    return;
+  }
+
+  const smell = confirm(
+    "Does the food have an unusual or bad smell?"
+  );
+
+  const storage = confirm(
+    "Was the food left unrefrigerated for a long time?"
+  );
+
+  const cooking = confirm(
+    "Are you unsure whether the food was cooked properly?"
+  );
+
+  if (smell || storage || cooking) {
+    result.innerHTML = `
+      <h3 style="color:#c0392b">
+        ⚠️ FOOD SAFETY WARNING
+      </h3>
+      <p>Some safety concerns were reported.</p>
+      <p>Do not eat the food until its safety is established.</p>
+      <p>Seek advice from a food safety professional.</p>
+    `;
+  } else {
+    result.innerHTML = `
+      <h3 style="color:#168454">
+        ✅ NO WARNING REPORTED
+      </h3>
+      <p>Your answers did not indicate these particular warning signs.</p>
+      <p>This does NOT prove the food is safe or free from poison, bacteria or chemicals.</p>
+    `;
+  }
+}
+
+
+function analyzeFood() {
+  if (!camera.files.length) {
+    result.innerHTML = "📸 Please take a photo first.";
+    return;
+  }
+
+  const smell = confirm(
+    "Does the food have an unusual or bad smell?"
+  );
+
+  const storage = confirm(
+    "Was the food left unrefrigerated for a long time?"
+  );
+
+  const cooking = confirm(
+    "Are you unsure whether the food was cooked properly?"
+  );
+
+  if (smell || storage || cooking) {
+    result.innerHTML = `
+      <h3 style="color:#c0392b">
+        ⚠️ FOOD SAFETY WARNING
+      </h3>
+      <p>Some safety concerns were reported.</p>
+      <p>Do not eat the food until its safety is established.</p>
+      <p>Seek advice from a food safety professional.</p>
+    `;
+  } else {
+    result.innerHTML = `
+      <h3 style="color:#168454">
+        NO WARNING REPORTED
+      </h3>
+      <p>Your answers did not indicate these warning signs.</p>
+      <p>This does not prove the food is safe or free from poison, bacteria or chemicals.</p>
+    `;
+  }
+}
+
+</script>
+
+</body>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("SKY FOOD SAFETY ready"))
+      .catch(error => console.log(error));
+  });
+}
+</script>
+</html>
